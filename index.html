@@ -5,113 +5,457 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fatura Oluşturucu</title>
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 800px; margin: 0 auto; border: 1px solid #ddd; padding: 20px; border-radius: 5px; }
-        .header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .invoice-title { font-size: 24px; font-weight: bold; color: #28a745; text-align: right; }
-        .invoice-details { text-align: right; }
-        .company-info, .bill-to { margin-bottom: 20px; }
-        .company-name, .bill-to-title, .section-title { font-weight: bold; margin-bottom: 5px; }
-        .bill-to-title, .section-title { color: #28a745; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th { background-color: #28a745; color: white; padding: 10px; text-align: left; }
-        td { padding: 10px; border: 1px solid #ddd; }
-        .totals { width: 300px; margin-left: auto; }
-        .totals td { padding: 5px; border: none; }
-        .total-row td { font-weight: bold; }
-        .thank-you { text-align: center; color: #28a745; font-weight: bold; margin-top: 20px; }
-        .divider { border-top: 1px solid #ddd; margin: 20px 0; }
-        .company-link { color: #28a745; text-decoration: none; }
-        .company-link:hover { text-decoration: underline; }
-        .form-section { margin-bottom: 20px; }
-        .form-row { display: flex; align-items: center; margin-bottom: 10px; }
-        .form-row label { width: 150px; margin-right: 10px; }
-        .input-field { padding: 8px; border: 1px solid #ddd; border-radius: 4px; flex: 1; }
-        .input-number { width: 120px; }
-        .btn { padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 10px; }
-        .btn:hover { background-color: #218838; }
-        .buttons-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
-        @media print { .no-print { display: none; } }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .invoice-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+            text-align: right;
+        }
+        .invoice-details {
+            text-align: right;
+        }
+        .company-info, .bill-to {
+            margin-bottom: 20px;
+        }
+        .company-name, .bill-to-title, .section-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .bill-to-title, .section-title {
+            color: #28a745;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .totals {
+            width: 300px;
+            margin-left: auto;
+        }
+        .totals td {
+            padding: 5px;
+            border: none;
+        }
+        .total-row td {
+            font-weight: bold;
+        }
+        .thank-you {
+            text-align: center;
+            color: #28a745;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .divider {
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+        .company-link {
+            color: #28a745;
+            text-decoration: none;
+        }
+        .company-link:hover {
+            text-decoration: underline;
+        }
+        .form-panel {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .form-row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .form-row label {
+            width: 150px;
+            margin-right: 10px;
+        }
+        .input-field {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            flex: 1;
+        }
+        .input-number {
+            width: 120px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        h2 {
+            color: #28a745;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
-
+    <!-- Form Sayfası -->
     <div id="formPage" class="container">
         <h2>Fatura Bilgilerini Düzenle</h2>
-
-        <!-- Firma Seçimi -->
-        <div class="form-section">
-            <div class="section-title">Fatura Oluşturan Firma</div>
-            <div class="form-row">
-                <label for="issuerSelect">Kayıtlı Firmalar:</label>
-                <select id="issuerSelect" class="input-field"><option value="">Yeni Firma Ekle</option></select>
-            </div>
-            <button type="button" id="saveIssuerBtn" class="btn" style="display:none;">Kişiyi Kaydet</button>
-        </div>
-
-        <!-- Şirket Bilgileri -->
+        
         <div class="form-section">
             <div class="section-title">Şirket Bilgileri</div>
-            <div class="form-row"><label>Şirket Adı:</label><input id="companyName" class="input-field"></div>
-            <div class="form-row"><label>Adres 1:</label><input id="companyAddress1" class="input-field"></div>
-            <div class="form-row"><label>Adres 2:</label><input id="companyAddress2" class="input-field"></div>
-            <div class="form-section"><label>Adres 3:</label><input id="companyAddress3" class="input-field"></div>
-            <div class="form-row"><label>Vergi No:</label><input id="taxNumber" class="input-field"></div>
-            <div class="form-row"><label>Telefon:</label><input id="phoneNumber" class="input-field"></div>
-            <div class="form-row"><label>E-posta:</label><input id="email" class="input-field"></div>
-            <div class="form-row"><label>Web Sitesi:</label><input id="website" class="input-field"></div>
+            <div class="form-row">
+                <label for="companyName">Şirket Adı:</label>
+                <input type="text" id="companyName" class="input-field" value="Shopify Kurulum Hizmeti">
+            </div>
+            <div class="form-row">
+                <label for="companyAddress1">Adres Satırı 1:</label>
+                <input type="text" id="companyAddress1" class="input-field" value="Mehmet Topaç Bulvarı,">
+            </div>
+            <div class="form-row">
+                <label for="companyAddress2">Adres Satırı 2:</label>
+                <input type="text" id="companyAddress2" class="input-field" value="Uşak,">
+            </div>
+            <div class="form-row">
+                <label for="companyAddress3">Adres Satırı 3:</label>
+                <input type="text" id="companyAddress3" class="input-field" value="Turkey, 64200">
+            </div>
+            <div class="form-row">
+                <label for="taxNumber">Vergi No:</label>
+                <input type="text" id="taxNumber" class="input-field" value="79286048">
+            </div>
+            <div class="form-row">
+                <label for="phoneNumber">Telefon:</label>
+                <input type="text" id="phoneNumber" class="input-field" value="+905071446189">
+            </div>
+            <div class="form-row">
+                <label for="email">E-posta:</label>
+                <input type="text" id="email" class="input-field" value="erbaskayam@hotmail.com">
+            </div>
+            <div class="form-row">
+                <label for="website">Web Sitesi:</label>
+                <input type="text" id="website" class="input-field" value="shopkurulum.com">
+            </div>
         </div>
-
-        <!-- Fatura Detayı, Müşteri, Ürün, Ödeme vs. alanları burada aynı yapıda devam edecek -->
-
-        <div class="buttons-container no-print">
+        
+        <div class="form-section">
+            <div class="section-title">Fatura Detayları</div>
+            <div class="form-row">
+                <label for="invoiceNo">Fatura No:</label>
+                <input type="text" id="invoiceNo" class="input-field" value="SKH1002">
+            </div>
+            <div class="form-row">
+                <label for="orderDate">Sipariş Tarihi:</label>
+                <input type="date" id="orderDate" class="input-field">
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="section-title">Müşteri Bilgileri</div>
+            <div class="form-row">
+                <label for="customerName">Müşteri Adı:</label>
+                <input type="text" id="customerName" class="input-field" value="Ömer Hakan ÖLÇER">
+            </div>
+            <div class="form-row">
+                <label for="customerAddress1">Adres Satırı 1:</label>
+                <input type="text" id="customerAddress1" class="input-field" value="Fritz-Reuter str. 19, ">
+            </div>
+            <div class="form-row">
+                <label for="customerAddress2">Adres Satırı 2:</label>
+                <input type="text" id="customerAddress2" class="input-field" value="21629 Neu wulmstorf, Germany">
+            </div>
+            <div class="form-row">
+                <label for="customerPhone">Telefon:</label>
+                <input type="text" id="customerPhone" class="input-field" value="+49 176 61660555">
+            </div>
+            <div class="form-row">
+                <label for="customerEmail">E-posta:</label>
+                <input type="text" id="customerEmail" class="input-field" value="hakan.olcer@web.de">
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="section-title">Ürün Bilgileri</div>
+            <div class="form-row">
+                <label for="itemName">Ürün Adı:</label>
+                <input type="text" id="itemName" class="input-field" value="Shopify Kurulum Hizmeti">
+            </div>
+            <div class="form-row">
+                <label for="unitPrice">Birim Fiyat (€):</label>
+                <input type="number" id="unitPrice" class="input-field input-number" value="400.00" step="0.01">
+            </div>
+            <div class="form-row">
+                <label for="quantity">Miktar:</label>
+                <input type="number" id="quantity" class="input-field input-number" value="1" min="1">
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="section-title">Ödeme ve Vergi Bilgileri</div>
+            <div class="form-row">
+                <label for="paymentMethod">Ödeme Yöntemi:</label>
+                <input type="text" id="paymentMethod" class="input-field" value="PayTR - Kredi / Banka Kartı">
+            </div>
+            <div class="form-row">
+                <label for="taxRate">KDV Oranı (%):</label>
+                <input type="number" id="taxRate" class="input-field input-number" value="20" min="0" max="100">
+            </div>
+            <div class="form-row">
+                <label for="discount">İndirim Tutarı (€):</label>
+                <input type="number" id="discount" class="input-field input-number" value="0.00" step="0.01" min="0">
+            </div>
+        </div>
+        
+        <div class="buttons-container">
             <button class="btn" onclick="generatePreview()">Fatura Önizleme</button>
         </div>
     </div>
-
-    <!-- Önizleme -->
+    
+    <!-- Önizleme Sayfası (başlangıçta gizli) -->
     <div id="previewPage" class="container" style="display:none;">
-        <!-- Burada preview HTML içeriği tam olarak yer alır -->
+        <div class="no-print buttons-container">
+            <button class="btn" onclick="backToForm()">Forma Dön</button>
+            <button class="btn" onclick="window.print()">PDF Olarak Kaydet</button>
+        </div>
+        
+        <div class="header">
+            <div class="company-info">
+                <div class="company-name" id="preview-companyName">Shopify Kurulum Hizmeti</div>
+                <div id="preview-companyAddress1">Mehmet Topaç Bulvarı,</div>
+                <div id="preview-companyAddress2">Uşak,</div>
+                <div id="preview-companyAddress3">Turkey, 64200</div>
+                <div>TAX/VAT: <span id="preview-taxNumber">79286048</span></div>
+                <div>Phone: <span id="preview-phoneNumber">+905071446189</span></div>
+                <div>Email: <span id="preview-email">erbaskayam@hotmail.com</span></div>
+                <div><a href="#" class="company-link" id="preview-website-link">shopkurulum.com</a></div>
+            </div>
+            
+            <div class="invoice-info">
+                <div class="invoice-title">Invoice</div>
+                <div class="invoice-details">
+                    <div>Invoice No.: #<span id="preview-invoiceNo">SKH1002</span></div>
+                    <div>Order Date: <span id="preview-orderDate">23-04-2025</span></div>
+                    <div>Order Amount: <span id="preview-grandTotal">€400.00</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bill-to">
+            <div class="bill-to-title">Bill To</div>
+            <div id="preview-customerName">Ömer Hakan ÖLÇER</div>
+            <div id="preview-customerAddress1">Fritz-Reuter str. 19, </div>
+            <div id="preview-customerAddress2">21629 Neu wulmstorf, Germany</div>
+            <div>Phone: <span id="preview-customerPhone">+49 176 61660555</span></div>
+            <div>Email: <span id="preview-customerEmail">hakan.olcer@web.de</span></div>
+        </div>
+        
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Unit Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+            </tr>
+            <tr>
+                <td id="preview-itemName">Shopify Kurulum Hizmeti</td>
+                <td id="preview-unitPrice">€400.00</td>
+                <td>x <span id="preview-quantity">1</span></td>
+                <td id="preview-subtotal">€400.00</td>
+            </tr>
+        </table>
+        
+        <div class="payment-details">
+            <div class="bill-to-title">Payment Details</div>
+            <div id="preview-paymentMethod">Card: PayTR - Kredi / Banka Kartı</div>
+        </div>
+        
+        <table class="totals">
+            <tr>
+                <td>Total Discount</td>
+                <td style="text-align: right;" id="preview-discount">-€0.00</td>
+            </tr>
+            <tr>
+                <td>Subtotal after discount</td>
+                <td style="text-align: right;" id="preview-afterDiscount">€400.00</td>
+            </tr>
+            <tr>
+                <td>Total Tax (<span id="preview-taxRate">KDV 20%</span>)</td>
+                <td style="text-align: right;" id="preview-taxAmount">€66.67</td>
+            </tr>
+            <tr>
+                <td>Total paid</td>
+                <td style="text-align: right;" id="preview-totalPaid">€400.00</td>
+            </tr>
+            <tr>
+                <td>Net Total</td>
+                <td style="text-align: right;" id="preview-netTotal">€400.00</td>
+            </tr>
+            <tr class="total-row">
+                <td>Grand Total</td>
+                <td style="text-align: right;" id="preview-grandTotalWithCurrency">€400.00</td>
+            </tr>
+        </table>
+        
+        <div class="divider"></div>
+        
+        <div class="thank-you">Thank you for your purchase</div>
     </div>
 
     <script>
-        // front-end: issuer CRUD
-        async function loadIssuers() {
-            try { const res = await fetch('/issuers.json'); if (!res.ok) throw ''; return await res.json(); }
-            catch { return []; }
-        }
-        async function saveIssuerToServer(o) {
-            await fetch('/issuers', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(o) });
-        }
-        async function populateIssuerSelect() {
-            const arr = await loadIssuers();
-            const sel = document.getElementById('issuerSelect');
-            arr.forEach((o,i)=>{ let opt=document.createElement('option'); opt.value=i; opt.textContent=o.companyName; sel.append(opt); });
-        }
-        function fillCompanyFields(o) {
-            ['companyName','companyAddress1','companyAddress2','companyAddress3','taxNumber','phoneNumber','email','website']
-            .forEach(id=>document.getElementById(id).value=o[id]||'');
-        }
-        function clearCompanyFields() {
-            ['companyName','companyAddress1','companyAddress2','companyAddress3','taxNumber','phoneNumber','email','website']
-            .forEach(id=>document.getElementById(id).value='');
-        }
-        document.addEventListener('DOMContentLoaded', async ()=>{
-            await populateIssuerSelect();
-            const sel=document.getElementById('issuerSelect'), btn=document.getElementById('saveIssuerBtn');
-            sel.addEventListener('change', ()=>{
-                if (sel.value==='') { clearCompanyFields(); btn.style.display='inline-block'; }
-                else { loadIssuers().then(a=>{ fillCompanyFields(a[sel.value]); btn.style.display='none'; }); }
-            });
-            btn.addEventListener('click', async ()=>{
-                const o={};
-                ['companyName','companyAddress1','companyAddress2','companyAddress3','taxNumber','phoneNumber','email','website']
-                .forEach(id=>o[id]=document.getElementById(id).value);
-                await saveIssuerToServer(o);
-                window.location.reload();
-            });
+        // Sayfa yüklendiğinde şimdiki tarihi ayarla
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const formattedDate = now.toISOString().split('T')[0]; // YYYY-MM-DD formatı
+            document.getElementById('orderDate').value = formattedDate;
         });
-        // generatePreview() ve backToForm() fonksiyonları burada
+        
+        function formatCurrency(amount) {
+            return '€' + amount.toFixed(2);
+        }
+        
+        function backToForm() {
+            document.getElementById('previewPage').style.display = 'none';
+            document.getElementById('formPage').style.display = 'block';
+        }
+        
+        function generatePreview() {
+            // Form değerlerini al
+            const companyName = document.getElementById('companyName').value;
+            const companyAddress1 = document.getElementById('companyAddress1').value;
+            const companyAddress2 = document.getElementById('companyAddress2').value;
+            const companyAddress3 = document.getElementById('companyAddress3').value;
+            const taxNumber = document.getElementById('taxNumber').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const email = document.getElementById('email').value;
+            const website = document.getElementById('website').value;
+            
+            const invoiceNo = document.getElementById('invoiceNo').value;
+            const orderDateInput = document.getElementById('orderDate').value;
+            
+            const customerName = document.getElementById('customerName').value;
+            const customerAddress1 = document.getElementById('customerAddress1').value;
+            const customerAddress2 = document.getElementById('customerAddress2').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const customerEmail = document.getElementById('customerEmail').value;
+            
+            const itemName = document.getElementById('itemName').value;
+            const unitPrice = parseFloat(document.getElementById('unitPrice').value);
+            const quantity = parseInt(document.getElementById('quantity').value);
+            
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const taxRate = parseFloat(document.getElementById('taxRate').value);
+            const discount = parseFloat(document.getElementById('discount').value);
+            
+            // Hesaplamalar
+            const subtotal = unitPrice * quantity;
+            const afterDiscount = subtotal - discount;
+            
+            // KDV hesaplama (KDV dahil fiyattan geriye doğru hesaplama)
+            const taxAmount = afterDiscount * taxRate / (100 + taxRate);
+            const netTotal = afterDiscount - taxAmount;
+            
+            // Toplam ödenecek tutar (vergiler dahil)
+            const grandTotal = afterDiscount;
+            
+            // Tarihi formatla
+            let formattedDate = "";
+            if (orderDateInput) {
+                const orderDate = new Date(orderDateInput);
+                const day = String(orderDate.getDate()).padStart(2, '0');
+                const month = String(orderDate.getMonth() + 1).padStart(2, '0');
+                const year = orderDate.getFullYear();
+                formattedDate = `${day}-${month}-${year}`;
+            }
+            
+            // Önizleme alanındaki değerleri güncelle
+            document.getElementById('preview-companyName').textContent = companyName;
+            document.getElementById('preview-companyAddress1').textContent = companyAddress1;
+            document.getElementById('preview-companyAddress2').textContent = companyAddress2;
+            document.getElementById('preview-companyAddress3').textContent = companyAddress3;
+            document.getElementById('preview-taxNumber').textContent = taxNumber;
+            document.getElementById('preview-phoneNumber').textContent = phoneNumber;
+            document.getElementById('preview-email').textContent = email;
+            document.getElementById('preview-website-link').textContent = website;
+            document.getElementById('preview-website-link').href = 'http://' + website;
+            
+            document.getElementById('preview-invoiceNo').textContent = invoiceNo;
+            document.getElementById('preview-orderDate').textContent = formattedDate;
+            
+            document.getElementById('preview-customerName').textContent = customerName;
+            document.getElementById('preview-customerAddress1').textContent = customerAddress1;
+            document.getElementById('preview-customerAddress2').textContent = customerAddress2;
+            document.getElementById('preview-customerPhone').textContent = customerPhone;
+            document.getElementById('preview-customerEmail').textContent = customerEmail;
+            
+            document.getElementById('preview-itemName').textContent = itemName;
+            document.getElementById('preview-unitPrice').textContent = formatCurrency(unitPrice);
+            document.getElementById('preview-quantity').textContent = quantity;
+            document.getElementById('preview-subtotal').textContent = formatCurrency(subtotal);
+            
+            document.getElementById('preview-paymentMethod').textContent = paymentMethod;
+            document.getElementById('preview-discount').textContent = '-' + formatCurrency(discount);
+            document.getElementById('preview-afterDiscount').textContent = formatCurrency(afterDiscount);
+            document.getElementById('preview-taxRate').textContent = `KDV ${taxRate}%`;
+            document.getElementById('preview-taxAmount').textContent = formatCurrency(taxAmount);
+            document.getElementById('preview-totalPaid').textContent = formatCurrency(grandTotal);
+            document.getElementById('preview-netTotal').textContent = formatCurrency(netTotal);
+            document.getElementById('preview-grandTotal').textContent = formatCurrency(grandTotal);
+            document.getElementById('preview-grandTotalWithCurrency').textContent = formatCurrency(grandTotal);
+            
+            // Form sayfasını gizle, önizleme sayfasını göster
+            document.getElementById('formPage').style.display = 'none';
+            document.getElementById('previewPage').style.display = 'block';
+        }
     </script>
 </body>
 </html>
