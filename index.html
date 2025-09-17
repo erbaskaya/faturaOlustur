@@ -23,7 +23,6 @@
         .divider { border-top: 1px solid #ddd; margin: 20px 0; }
         .company-link { color: #28a745; text-decoration: none; }
         .company-link:hover { text-decoration: underline; }
-        .form-panel { background-color: #f9f9f9; padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #ddd; }
         .form-section { margin-bottom: 20px; }
         .form-row { display: flex; margin-bottom: 10px; align-items: center; }
         .form-row label { width: 150px; margin-right: 10px; }
@@ -120,7 +119,7 @@
                 <input type="text" id="itemName" class="input-field" value="Shopify Kurulum Hizmeti">
             </div>
             <div class="form-row">
-                <label for="unitPrice">Birim Fiyat (€):</label>
+                <label for="unitPrice">Birim Fiyat:</label>
                 <input type="number" id="unitPrice" class="input-field input-number" value="400.00" step="0.01">
             </div>
             <div class="form-row">
@@ -135,12 +134,23 @@
                 <label for="paymentMethod">Ödeme Yöntemi:</label>
                 <input type="text" id="paymentMethod" class="input-field" value="PayTR - Kredi / Banka Kartı">
             </div>
+
+            <!-- YENİ: Para Birimi Seçimi (oto-güncelleme) -->
+            <div class="form-row">
+                <label for="currency">Para Birimi:</label>
+                <select id="currency" class="input-field input-number" onchange="handleCurrencyChange()">
+                    <option value="EUR" selected>EUR (€)</option>
+                    <option value="USD">USD ($)</option>
+                    <option value="TRY">TL (₺)</option>
+                </select>
+            </div>
+
             <div class="form-row">
                 <label for="taxRate">KDV Oranı (%):</label>
-                <input type="number" id="taxRate" class="input-field input-number" value="20" min="0" max="100">
+                <input type="number" id="taxRate" class="input-field input-number" value="0" min="0" max="100">
             </div>
             <div class="form-row">
-                <label for="discount">İndirim Tutarı (€):</label>
+                <label for="discount">İndirim Tutarı:</label>
                 <input type="number" id="discount" class="input-field input-number" value="0.00" step="0.01" min="0">
             </div>
         </div>
@@ -248,21 +258,44 @@
             document.getElementById('orderDate').value = formattedDate;
         });
 
-        // <<< DEĞİŞTİRİLEN FONKSİYON
-        function formatCurrency(amount) {
+        // Para birimi -> sembol
+        function currencySymbol(currency) {
+            switch (currency) {
+                case 'USD': return '$';
+                case 'TRY': return '₺';
+                case 'EUR':
+                default: return '€';
+            }
+        }
+        // Para birimi -> locale (binlik/ondalık ayracı)
+        function localeForCurrency(currency) {
+            switch (currency) {
+                case 'USD': return 'en-US'; // 23,180.61
+                case 'TRY': return 'tr-TR'; // 23.180,61
+                case 'EUR':
+                default: return 'de-DE';    // 23.180,61
+            }
+        }
+        // Genel formatlayıcı
+        function formatCurrency(amount, currency) {
             const n = Number(amount) || 0;
-            // de-DE yereli: 23.180,61 biçimi
-            const formatted = n.toLocaleString('de-DE', {
+            const locale = localeForCurrency(currency);
+            const formatted = n.toLocaleString(locale, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             });
-            return '€' + formatted;
+            return currencySymbol(currency) + formatted;
         }
-        // >>>
 
         function backToForm() {
             document.getElementById('previewPage').style.display = 'none';
             document.getElementById('formPage').style.display = 'block';
+        }
+
+        // Önizleme açıkken para birimi değiştiğinde otomatik güncelle
+        function handleCurrencyChange() {
+            const previewShown = document.getElementById('previewPage').style.display !== 'none';
+            if (previewShown) generatePreview();
         }
         
         function generatePreview() {
@@ -290,6 +323,7 @@
             const quantity = parseInt(document.getElementById('quantity').value);
             
             const paymentMethod = document.getElementById('paymentMethod').value;
+            const currency = document.getElementById('currency').value;
             const taxRate = parseFloat(document.getElementById('taxRate').value);
             const discount = parseFloat(document.getElementById('discount').value);
             
@@ -335,19 +369,19 @@
             document.getElementById('preview-customerEmail').textContent = customerEmail;
             
             document.getElementById('preview-itemName').textContent = itemName;
-            document.getElementById('preview-unitPrice').textContent = formatCurrency(unitPrice);
+            document.getElementById('preview-unitPrice').textContent = formatCurrency(unitPrice, currency);
             document.getElementById('preview-quantity').textContent = quantity;
-            document.getElementById('preview-subtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('preview-subtotal').textContent = formatCurrency(subtotal, currency);
             
             document.getElementById('preview-paymentMethod').textContent = paymentMethod;
-            document.getElementById('preview-discount').textContent = '-' + formatCurrency(discount);
-            document.getElementById('preview-afterDiscount').textContent = formatCurrency(afterDiscount);
+            document.getElementById('preview-discount').textContent = '-' + formatCurrency(discount, currency);
+            document.getElementById('preview-afterDiscount').textContent = formatCurrency(afterDiscount, currency);
             document.getElementById('preview-taxRate').textContent = `KDV ${taxRate}%`;
-            document.getElementById('preview-taxAmount').textContent = formatCurrency(taxAmount);
-            document.getElementById('preview-totalPaid').textContent = formatCurrency(grandTotal);
-            document.getElementById('preview-netTotal').textContent = formatCurrency(netTotal);
-            document.getElementById('preview-grandTotal').textContent = formatCurrency(grandTotal);
-            document.getElementById('preview-grandTotalWithCurrency').textContent = formatCurrency(grandTotal);
+            document.getElementById('preview-taxAmount').textContent = formatCurrency(taxAmount, currency);
+            document.getElementById('preview-totalPaid').textContent = formatCurrency(grandTotal, currency);
+            document.getElementById('preview-netTotal').textContent = formatCurrency(netTotal, currency);
+            document.getElementById('preview-grandTotal').textContent = formatCurrency(grandTotal, currency);
+            document.getElementById('preview-grandTotalWithCurrency').textContent = formatCurrency(grandTotal, currency);
             
             // Görünürlük
             document.getElementById('formPage').style.display = 'none';
