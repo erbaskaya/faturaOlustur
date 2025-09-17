@@ -5,146 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fatura Oluşturucu</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-        .invoice-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #28a745;
-            text-align: right;
-        }
-        .invoice-details {
-            text-align: right;
-        }
-        .company-info, .bill-to {
-            margin-bottom: 20px;
-        }
-        .company-name, .bill-to-title, .section-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .bill-to-title, .section-title {
-            color: #28a745;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th {
-            background-color: #28a745;
-            color: white;
-            padding: 10px;
-            text-align: left;
-        }
-        td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-        .totals {
-            width: 300px;
-            margin-left: auto;
-        }
-        .totals td {
-            padding: 5px;
-            border: none;
-        }
-        .total-row td {
-            font-weight: bold;
-        }
-        .thank-you {
-            text-align: center;
-            color: #28a745;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        .divider {
-            border-top: 1px solid #ddd;
-            margin: 20px 0;
-        }
-        .company-link {
-            color: #28a745;
-            text-decoration: none;
-        }
-        .company-link:hover {
-            text-decoration: underline;
-        }
-        .form-panel {
-            background-color: #f9f9f9;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        .form-section {
-            margin-bottom: 20px;
-        }
-        .form-row {
-            display: flex;
-            margin-bottom: 10px;
-            align-items: center;
-        }
-        .form-row label {
-            width: 150px;
-            margin-right: 10px;
-        }
-        .input-field {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            flex: 1;
-        }
-        .input-number {
-            width: 120px;
-        }
-        .btn {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        .btn:hover {
-            background-color: #218838;
-        }
-        .buttons-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        h2 {
-            color: #28a745;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-        }
-        @media print {
-            .no-print {
-                display: none;
-            }
-        }
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; border: 1px solid #ddd; padding: 20px; border-radius: 5px; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .invoice-title { font-size: 24px; font-weight: bold; color: #28a745; text-align: right; }
+        .invoice-details { text-align: right; }
+        .company-info, .bill-to { margin-bottom: 20px; }
+        .company-name, .bill-to-title, .section-title { font-weight: bold; margin-bottom: 5px; }
+        .bill-to-title, .section-title { color: #28a745; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th { background-color: #28a745; color: white; padding: 10px; text-align: left; }
+        td { padding: 10px; border: 1px solid #ddd; }
+        .totals { width: 300px; margin-left: auto; }
+        .totals td { padding: 5px; border: none; }
+        .total-row td { font-weight: bold; }
+        .thank-you { text-align: center; color: #28a745; font-weight: bold; margin-top: 20px; }
+        .divider { border-top: 1px solid #ddd; margin: 20px 0; }
+        .company-link { color: #28a745; text-decoration: none; }
+        .company-link:hover { text-decoration: underline; }
+        .form-panel { background-color: #f9f9f9; padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #ddd; }
+        .form-section { margin-bottom: 20px; }
+        .form-row { display: flex; margin-bottom: 10px; align-items: center; }
+        .form-row label { width: 150px; margin-right: 10px; }
+        .input-field { padding: 8px; border: 1px solid #ddd; border-radius: 4px; flex: 1; }
+        .input-number { width: 120px; }
+        .btn { padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .btn:hover { background-color: #218838; }
+        .buttons-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        h2 { color: #28a745; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+        @media print { .no-print { display: none; } }
     </style>
 </head>
 <body>
@@ -232,7 +121,7 @@
             </div>
             <div class="form-row">
                 <label for="unitPrice">Birim Fiyat (€):</label>
-                <input type="number" id="unitPrice" class="input-field input-number" value="1000.00" step="0.01">
+                <input type="number" id="unitPrice" class="input-field input-number" value="400.00" step="0.01">
             </div>
             <div class="form-row">
                 <label for="quantity">Miktar:</label>
@@ -248,7 +137,7 @@
             </div>
             <div class="form-row">
                 <label for="taxRate">KDV Oranı (%):</label>
-                <input type="number" id="taxRate" class="input-field input-number" value="0" min="0" max="100">
+                <input type="number" id="taxRate" class="input-field input-number" value="20" min="0" max="100">
             </div>
             <div class="form-row">
                 <label for="discount">İndirim Tutarı (€):</label>
@@ -285,7 +174,7 @@
                 <div class="invoice-details">
                     <div>Invoice No.: #<span id="preview-invoiceNo">SKH1002</span></div>
                     <div>Order Date: <span id="preview-orderDate">23-04-2025</span></div>
-                    <div>Order Amount: <span id="preview-grandTotal">€400.00</span></div>
+                    <div>Order Amount: <span id="preview-grandTotal">€400,00</span></div>
                 </div>
             </div>
         </div>
@@ -308,9 +197,9 @@
             </tr>
             <tr>
                 <td id="preview-itemName">Shopify Kurulum Hizmeti</td>
-                <td id="preview-unitPrice">€400.00</td>
+                <td id="preview-unitPrice">€400,00</td>
                 <td>x <span id="preview-quantity">1</span></td>
-                <td id="preview-subtotal">€400.00</td>
+                <td id="preview-subtotal">€400,00</td>
             </tr>
         </table>
         
@@ -322,27 +211,27 @@
         <table class="totals">
             <tr>
                 <td>Total Discount</td>
-                <td style="text-align: right;" id="preview-discount">-€0.00</td>
+                <td style="text-align: right;" id="preview-discount">-€0,00</td>
             </tr>
             <tr>
                 <td>Subtotal after discount</td>
-                <td style="text-align: right;" id="preview-afterDiscount">€400.00</td>
+                <td style="text-align: right;" id="preview-afterDiscount">€400,00</td>
             </tr>
             <tr>
                 <td>Total Tax (<span id="preview-taxRate">KDV 20%</span>)</td>
-                <td style="text-align: right;" id="preview-taxAmount">€66.67</td>
+                <td style="text-align: right;" id="preview-taxAmount">€66,67</td>
             </tr>
             <tr>
                 <td>Total paid</td>
-                <td style="text-align: right;" id="preview-totalPaid">€400.00</td>
+                <td style="text-align: right;" id="preview-totalPaid">€400,00</td>
             </tr>
             <tr>
                 <td>Net Total</td>
-                <td style="text-align: right;" id="preview-netTotal">€400.00</td>
+                <td style="text-align: right;" id="preview-netTotal">€333,33</td>
             </tr>
             <tr class="total-row">
                 <td>Grand Total</td>
-                <td style="text-align: right;" id="preview-grandTotalWithCurrency">€400.00</td>
+                <td style="text-align: right;" id="preview-grandTotalWithCurrency">€400,00</td>
             </tr>
         </table>
         
@@ -355,21 +244,29 @@
         // Sayfa yüklendiğinde şimdiki tarihi ayarla
         document.addEventListener('DOMContentLoaded', function() {
             const now = new Date();
-            const formattedDate = now.toISOString().split('T')[0]; // YYYY-MM-DD formatı
+            const formattedDate = now.toISOString().split('T')[0]; // YYYY-MM-DD
             document.getElementById('orderDate').value = formattedDate;
         });
-        
+
+        // <<< DEĞİŞTİRİLEN FONKSİYON
         function formatCurrency(amount) {
-            return '€' + amount.toFixed(2);
+            const n = Number(amount) || 0;
+            // de-DE yereli: 23.180,61 biçimi
+            const formatted = n.toLocaleString('de-DE', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            return '€' + formatted;
         }
-        
+        // >>>
+
         function backToForm() {
             document.getElementById('previewPage').style.display = 'none';
             document.getElementById('formPage').style.display = 'block';
         }
         
         function generatePreview() {
-            // Form değerlerini al
+            // Form değerleri
             const companyName = document.getElementById('companyName').value;
             const companyAddress1 = document.getElementById('companyAddress1').value;
             const companyAddress2 = document.getElementById('companyAddress2').value;
@@ -399,15 +296,15 @@
             // Hesaplamalar
             const subtotal = unitPrice * quantity;
             const afterDiscount = subtotal - discount;
-            
-            // KDV hesaplama (KDV dahil fiyattan geriye doğru hesaplama)
+
+            // KDV: dahil fiyat üzerinden geriye doğru
             const taxAmount = afterDiscount * taxRate / (100 + taxRate);
             const netTotal = afterDiscount - taxAmount;
-            
-            // Toplam ödenecek tutar (vergiler dahil)
+
+            // Vergi dahil toplam
             const grandTotal = afterDiscount;
             
-            // Tarihi formatla
+            // Tarih formatı DD-MM-YYYY
             let formattedDate = "";
             if (orderDateInput) {
                 const orderDate = new Date(orderDateInput);
@@ -417,7 +314,7 @@
                 formattedDate = `${day}-${month}-${year}`;
             }
             
-            // Önizleme alanındaki değerleri güncelle
+            // Önizleme alanları
             document.getElementById('preview-companyName').textContent = companyName;
             document.getElementById('preview-companyAddress1').textContent = companyAddress1;
             document.getElementById('preview-companyAddress2').textContent = companyAddress2;
@@ -452,7 +349,7 @@
             document.getElementById('preview-grandTotal').textContent = formatCurrency(grandTotal);
             document.getElementById('preview-grandTotalWithCurrency').textContent = formatCurrency(grandTotal);
             
-            // Form sayfasını gizle, önizleme sayfasını göster
+            // Görünürlük
             document.getElementById('formPage').style.display = 'none';
             document.getElementById('previewPage').style.display = 'block';
         }
